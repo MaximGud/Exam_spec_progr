@@ -1,8 +1,10 @@
 package Task2;
 
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,12 +14,15 @@ public class View {
 
   
   public static void run() {
+  List<Toy> toys = new ArrayList<Toy>();
+  PriorityQueue<Toy> prizes = new PriorityQueue<>();
 
+  while (true){
     System.out.println("Добро пожаловать в магазин игрушек! Выберите пункт меню:");
-    System.out.println("Добавить игрушки - 1");
-    System.out.println("Посмотреть очередь игрушек - 2");
-    System.out.println("Получить приз - 3");
-    System.out.println("Выход - 4");
+    System.out.println("1) Добавить игрушки");
+    System.out.println("2) Изменить вес игрушки");
+    System.out.println("3) Получить приз");
+    System.out.println("4) Выход");
 
     Scanner in = new Scanner(System.in);
     try{
@@ -32,12 +37,12 @@ public class View {
 switch (userInput) {
   case "1":
      System.out.println("Введите не менее 3 игрушек (ID, название, вес)");
-     List<Toy> toys = new ArrayList<Toy>();
+     
      while(toys.size()<3){
 
       System.out.print("Введите ID игрушки: ");
       int toyId = in.nextInt();
-      System.out.print("Введите название игрушки: ");
+      System.out.print("Введите название игрушки(Eng): ");
       Scanner in2 = new Scanner(System.in);
       String toyName = in2.nextLine();
       System.out.print("Введите вес игрушки(от 1 до 8): ");
@@ -45,17 +50,23 @@ switch (userInput) {
     
     toys = AddNewToys.addToyToArray(toyId, toyName,toyValue, toys);
      }
-     System.out.println(toys);
+     System.out.println("Игрушки добавлены");
     break;
 
   case "2":
+
+     SetFreq.setFrequency(toys);
     
     break;
     case "3":
+      GetPrize.wheel(toys);
+         
     
     break;
     case "4":
-    
+      System.out.println("До свидания!");
+       System.exit(4);
+  
     break;
 }
 }
@@ -64,7 +75,7 @@ switch (userInput) {
       } catch (InputMismatchException e) {
           System.err.println("Некорректный ввод числа");
     
-
+      }
    
 
    
